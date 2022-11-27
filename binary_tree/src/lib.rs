@@ -96,30 +96,34 @@ pub fn count_nodes(tree: DumbTree) -> u32 {
 mod count_nodes_tests {
     use super::*;
 
+    fn build_tree_helper() -> crate::DumbTree {
+        DumbTree::Node(
+            Box::new(DumbTree::Node(
+                Box::new(DumbTree::Node(
+                    Box::new(DumbTree::Empty),
+                    Box::new(DumbTree::Empty),
+                )),
+                Box::new(DumbTree::Node(
+                    Box::new(DumbTree::Empty),
+                    Box::new(DumbTree::Empty),
+                )),
+            )),
+            Box::new(DumbTree::Node(
+                Box::new(DumbTree::Node(
+                    Box::new(DumbTree::Empty),
+                    Box::new(DumbTree::Empty),
+                )),
+                Box::new(DumbTree::Node(
+                    Box::new(DumbTree::Empty),
+                    Box::new(DumbTree::Empty),
+                )),
+            )),
+        )
+    }
+
     #[test]
     fn given_tree_of_seven() {
-        let tree_of_seven = DumbTree::Node(
-            Box::new(DumbTree::Node(
-                Box::new(DumbTree::Node(
-                    Box::new(DumbTree::Empty),
-                    Box::new(DumbTree::Empty),
-                )),
-                Box::new(DumbTree::Node(
-                    Box::new(DumbTree::Empty),
-                    Box::new(DumbTree::Empty),
-                )),
-            )),
-            Box::new(DumbTree::Node(
-                Box::new(DumbTree::Node(
-                    Box::new(DumbTree::Empty),
-                    Box::new(DumbTree::Empty),
-                )),
-                Box::new(DumbTree::Node(
-                    Box::new(DumbTree::Empty),
-                    Box::new(DumbTree::Empty),
-                )),
-            )),
-        );
+        let tree_of_seven = build_tree_helper();
         let result = count_nodes(tree_of_seven);
         assert_eq!(result, 7);
     }

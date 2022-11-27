@@ -7,8 +7,13 @@ name = "display_ownership"
 version = "0.1.0"
 
 [[package]]
+name = "rectangle"
+version = "0.1.0"
+
+[[package]]
 name = "rust_learn"
 version = "0.1.0"
 dependencies = [
  "display_ownership",
+ "rectangle",
 ]

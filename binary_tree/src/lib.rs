@@ -34,8 +34,8 @@ impl Gettable<i32, BinaryTree> for BinaryTree {
             match tree {
                 BinaryTree::Node(value, left, right) => match seek.cmp(&value) {
                     std::cmp::Ordering::Equal => Some(tree),
-                    std::cmp::Ordering::Less => get(seek, &*left),
-                    std::cmp::Ordering::Greater => get(seek, &*right),
+                    std::cmp::Ordering::Less => find(seek, &*left),
+                    std::cmp::Ordering::Greater => find(seek, &*right),
                 },
                 BinaryTree::Empty => None,
             }
@@ -56,10 +56,6 @@ impl NodesCountable for BinaryTree {
 
         count(self)
     }
-}
-
-pub fn get(seek_value: i32, tree: &BinaryTree) -> Option<&BinaryTree> {
-    tree.get(seek_value)
 }
 
 #[cfg(test)]
@@ -90,13 +86,13 @@ mod tests {
     mod binary_tree_tests {
         use super::*;
 
-        mod get_tests {
+        mod gettable_tests {
             use super::*;
             #[test]
             fn given_element_present() {
                 let seek = 37;
                 let tree = helpers::build_binary_tree();
-                let result = get(seek, &tree);
+                let result = tree.get(seek);
                 assert_eq!(result.is_some(), true);
                 if let BinaryTree::Node(result_value, _, _) = result.unwrap() {
                     assert_eq!(result_value.clone(), seek);
@@ -109,7 +105,7 @@ mod tests {
             fn given_element_is_absent() {
                 let seek = 100500;
                 let tree = helpers::build_binary_tree();
-                let result = get(seek, &tree);
+                let result = tree.get(seek);
                 assert_eq!(result.is_none(), true);
             }
 
@@ -117,7 +113,7 @@ mod tests {
             fn given_tree_is_empty() {
                 let seek = 37;
                 let tree = BinaryTree::Empty;
-                let result = get(seek, &tree);
+                let result = tree.get(seek);
                 assert_eq!(result.is_none(), true);
             }
         }

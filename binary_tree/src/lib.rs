@@ -24,6 +24,27 @@ impl NodesCountable for DumbTree {
     }
 }
 
+trait Gettable<T, A> {
+    fn get(&self, seek: T) -> Option<&A>;
+}
+
+impl Gettable<i32, BinaryTree> for BinaryTree {
+    fn get(&self, seek: i32) -> Option<&BinaryTree> {
+        fn find(seek: i32, tree: &BinaryTree) -> Option<&BinaryTree> {
+            match tree {
+                BinaryTree::Node(value, left, right) => match seek.cmp(&value) {
+                    std::cmp::Ordering::Equal => Some(tree),
+                    std::cmp::Ordering::Less => get(seek, &*left),
+                    std::cmp::Ordering::Greater => get(seek, &*right),
+                },
+                BinaryTree::Empty => None,
+            }
+        }
+
+        find(seek, self)
+    }
+}
+
 impl NodesCountable for BinaryTree {
     fn count_nodes(&self) -> u32 {
         fn count(tree: &BinaryTree) -> u32 {
@@ -38,14 +59,7 @@ impl NodesCountable for BinaryTree {
 }
 
 pub fn get(seek_value: i32, tree: &BinaryTree) -> Option<&BinaryTree> {
-    match tree {
-        BinaryTree::Node(value, left, right) => match seek_value.cmp(&value) {
-            std::cmp::Ordering::Equal => Some(tree),
-            std::cmp::Ordering::Less => get(seek_value, &*left),
-            std::cmp::Ordering::Greater => get(seek_value, &*right),
-        },
-        BinaryTree::Empty => None,
-    }
+    tree.get(seek_value)
 }
 
 #[cfg(test)]

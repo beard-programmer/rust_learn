@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 display_ownership = { path = "display_ownership" }
 rectangle = { path = "rectangle" }
+binary_tree = { path = "binary_tree" }
 

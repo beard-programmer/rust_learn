@@ -18,4 +18,20 @@ fn main() {
 
     let area: rectangle::types::RectangleArea = rectangle::calculate_area(other_rectangle);
     dbg!(area);
+
+    let lowered: Vec<String> = "Hola my my my friend"
+        .split(" ")
+        .map(|word| word.to_lowercase())
+        .collect();
+
+    let searched: Vec<&str> = "Hola my my my friend"
+        .split(" ")
+        .filter_map(|word| match word {
+            "my" => Some(word),
+            _ => None,
+        })
+        .collect();
+
+    dbg!(lowered);
+    dbg!(searched);
 }

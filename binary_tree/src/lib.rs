@@ -2,7 +2,6 @@ pub enum DumbTree {
     Empty,
     Node(Box<DumbTree>, Box<DumbTree>),
 }
-
 pub enum BinaryTree {
     Empty,
     Node(i32, Box<BinaryTree>, Box<BinaryTree>),

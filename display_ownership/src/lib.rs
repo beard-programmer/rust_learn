@@ -11,7 +11,7 @@ pub fn read_only() -> () {
 
     // let move_string = |string: String| { println!("Moving string with content: {}", string) };
     let moved = String::from("String to be moved");
-    (|| { println!("Cloning string with content: {}", moved.clone()) })();
+    (|| println!("Cloning string with content: {}", moved.clone()))();
     move_string(moved);
     // move_string(moved); // Is invalid
 
@@ -20,12 +20,18 @@ pub fn read_only() -> () {
     };
     let to_be_copied = "String to be copied";
     move_string_literal(to_be_copied);
-    println!("Borrowing string literal second time with content: {}", to_be_copied);
+    println!(
+        "Borrowing string literal second time with content: {}",
+        to_be_copied
+    );
     (|string_literal: &str| {
-        println!("Borrowing string literal third time with content {}", string_literal);
+        println!(
+            "Borrowing string literal third time with content {}",
+            string_literal
+        );
     })(to_be_copied);
 
-    let give_ownership = || { String::from("ownership over string was given") };
+    let give_ownership = || String::from("ownership over string was given");
     let owned_string = give_ownership();
     move_string(owned_string);
     // println!("Owning string: {}", owned_string); // Is invalid

@@ -9,4 +9,4 @@ edition = "2021"
 display_ownership = { path = "display_ownership" }
 rectangle = { path = "rectangle" }
 binary_tree = { path = "binary_tree" }
-
+rand = "0.8.5"

@@ -1,7 +1,13 @@
+mod blog;
+
 fn main() {
     println!("Hello, rust learner!\n");
     display_ownership::read_only();
+    rectangles();
+    blog();
+}
 
+fn rectangles() {
     let scale = 2;
     let rectangle = rectangle::types::Rectangle {
         width: dbg!(1 * scale) as rectangle::types::RectanglSide,
@@ -18,20 +24,26 @@ fn main() {
 
     let area: rectangle::types::RectangleArea = rectangle::calculate_area(other_rectangle);
     dbg!(area);
+}
 
-    let lowered: Vec<String> = "Hola my my my friend"
-        .split(" ")
-        .map(|word| word.to_lowercase())
-        .collect();
+fn blog() {
+    let post = blog::build_post(Some("My very first post!\n".to_string()));
+    let post = blog::add_text(post, "I ate a salad for lunch today");
+    let post = blog::request_review(post);
 
-    let searched: Vec<&str> = "Hola my my my friend"
-        .split(" ")
-        .filter_map(|word| match word {
-            "my" => Some(word),
-            _ => None,
-        })
-        .collect();
+    let review_post = |post| -> blog::ReviewResult {
+        match rand::Rng::gen_bool(&mut rand::thread_rng(), 0.66) {
+            true => blog::approve(post),
+            false => blog::reject(post, "Stupid content".to_string()),
+        }
+    };
 
-    dbg!(lowered);
-    dbg!(searched);
+    match review_post(post) {
+        blog::ReviewResult::Approve(approved_post) => {
+            println!("Approved!\nPost: {}", approved_post.content())
+        }
+        blog::ReviewResult::Reject(rejected_post) => {
+            println!("Rejected!\nReason: {}", rejected_post.reason())
+        }
+    };
 }
